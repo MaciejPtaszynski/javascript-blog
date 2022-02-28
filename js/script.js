@@ -50,7 +50,7 @@ function generateTitleLinks(){
 
   /* remove contents of titleList */
 
-  const titleList = document.querySelectorAll(optTitleListSelector);
+  const titleList = document.querySelector(optTitleListSelector);
   titleList.innerHTML = '';
   console.log(titleList);
 
@@ -83,7 +83,7 @@ function generateTitleLinks(){
   }
     /* insert link into titleList */
     titleList.innerHTML = html;
-    const links = document.querySelector('.titles a');
+    const links = document.querySelectorAll('.titles a');
     console.log(links);
     for(let link of links){
       link.addEventListener('click', titleClickHandler);
