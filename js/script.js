@@ -3,31 +3,32 @@
 function titleClickHandler(event){
   event.preventDefault();
   const clickedElement = this;
+
   // console.log(event);
   console.log('Link was clicked!');
   /* [DONE] remove class 'active' from all article links  */
-  const activeArticles = document.querySelectorAll('.post');
-  for(let activeArticle of activeArticles){
-    activeArticle.classList.remove('active');
+  const activeLinks = document.querySelectorAll("a.active");
+  for(let link of activeLinks){
+    link.classList.remove('active');
   }
   /* [DONE] add class 'active' to the clicked link */
   clickedElement.classList.add('active');
-  console.log('clickedElement:', clickedElement);
+
   /* [DONE] remove class 'active' from all articles */
-  
+  // Dlaczego to nie działa: const activeArticles = document.querySelectorAll('.post .active');
+  const activeArticles = document.querySelectorAll('article.active');
+  for(let activeArticle of activeArticles){    
+    activeArticle.classList.remove('active');
+  }
+
   /* [DONE] get 'href' attribute from the clicked link */
   const articleSelector = clickedElement.getAttribute('href');
-  console.log(articleSelector);
+  
   /* [DONE] find the correct article using the selector (value of 'href' attribute) */
   const targetArticle = document.querySelector(articleSelector)
-  console.log(targetArticle)
+  
   /* [DONE] add class 'active' to the correct article */
   targetArticle.classList.add('active');
-}
-const links = document.querySelectorAll('.titles a');
-console.log(links)
-for(let link of links){
-  link.addEventListener('click', titleClickHandler);
 }
 
 // [DONE] module 5.4
@@ -79,7 +80,7 @@ function generateTags(){
   /* START LOOP: for every article: */
   for(let article of articles){
     /* find tags wrapper */
-    const titleList = article.querySelector(optArticleTagsSelector);
+    const tagsWrapper = article.querySelector(optArticleTagsSelector);
     /* make html variable with empty string */
     let html = '';
     /* get tags from data-tags attribute */
@@ -92,21 +93,16 @@ function generateTags(){
     for( let tag of articleTagsArray){
       console.log(tag)
       /* generate HTML of the link */
-      const linkHTML = '<li><a href="#tag-' + tag + '"><span>' + tag + '</span></a></li>';
+      const linkHTML = '<li><a href="#tag-' + tag + '"><span>' + tag + '</span></a></li> ';
       console.log('linkHTML', linkHTML);
       /* add generated code to html variable */
       html = html + linkHTML;
     /* END LOOP: for each tag */
     }
     /* insert HTML of all the links into the tags wrapper */
-    articles.innerHTML = html;
-    const links = document.querySelectorAll('.post-tags .list');
-    console.log(links)
-    for(let link of links){
-      link.addEventListener('click', titleClickHandler);
-    }
+    tagsWrapper.innerHTML = html;
   /* END LOOP: for every article: */
-}
+  }
 }
 generateTags();
 
@@ -142,11 +138,15 @@ function tagClickHandler(event){
 
 function addClickListenersToTags(){
   /* find all links to tags */
-
+  const links = document.querySelectorAll('.post-tags .list a');
+    console.log(links)
+  
   /* START LOOP: for each link */
-
+  for(let link of links){
     /* add tagClickHandler as event listener for that link */
-
+    link.addEventListener('click', tagClickHandler);
+  }
+    
   /* END LOOP: for each link */
 }
 
