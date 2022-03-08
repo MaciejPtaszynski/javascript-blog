@@ -39,7 +39,7 @@ const optArticleSelector = '.post',
   optArticleTagsSelector = '.post-tags .list',
   optArticleAuthorSelector = '.post .post-author',
   optTagsListSelector = '.tags.list',
-  optCloudClassCount = '5',
+  optCloudClassCount = 5,
   optCloudClassPrefix = 'tag-size-'
   ;
 
@@ -119,7 +119,7 @@ function generateTags(){
     for( let tag of articleTagsArray){
       console.log(tag)
       /* generate HTML of the link */
-      const linkHTML = '<a href="#tag-' + tag + '"><span>' + tag + '</span></a> ';
+      const linkHTML = '<a class="tag-size-X" href="#tag-' + tag + '"><span>' + tag + '</span></a> ';
       /* add generated code to html variable */
       html = html + linkHTML;
 
@@ -147,7 +147,9 @@ function generateTags(){
   let allTagsHTML = ' ';
 
   for (let tagLinkHtml in allTags){
-    allTagsHTML += '<li>' + tagLinkHtml + '(' + allTags[tagLinkHtml] + ')' + '</li>';
+    const kon = calculateTagClass(allTags[tagLinkHtml], tagsParams)
+    allTagsHTML += '<li>' + tagLinkHtml.replace('tag-size-X', kon ) + '(' + allTags[tagLinkHtml] + ')' + '</li>';
+    // allTagsHTML += tagLinkHTML;
   }
   console.log(allTagsHTML)
   
@@ -264,5 +266,4 @@ function addClickListenersToAuthors(){
 }
 
 addClickListenersToAuthors();
-
 
