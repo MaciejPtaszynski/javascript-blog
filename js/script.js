@@ -40,7 +40,10 @@ const optArticleSelector = '.post',
   optArticleAuthorSelector = '.post .post-author',
   optTagsListSelector = '.tags.list',
   optCloudClassCount = 5,
-  optCloudClassPrefix = 'tag-size-'
+  optCloudClassPrefix = 'tag-size-',
+  optAuthorsListSelector = '.list.authors',
+  optAuthorsCloudClassPrefix = 'author-size-',
+  optAuthorsCloudClassCount = 3
   ;
 
 function generateTitleLinks(customSelector = ''){
@@ -96,6 +99,14 @@ function calculateTagClass(count, params){
   const classNumber = Math.floor(percentage * (optCloudClassCount - 1) + 1);
   
   return optCloudClassPrefix + classNumber;
+}
+function calculateAuthorClass(count, params){
+  const normalizedCount = count - params.min;
+  const normalizedMax = params.max - params.min;
+  const percentage = normalizedCount / normalizedMax;
+  const classNumber = Math.floor(percentage * (optAuthorsCloudClassCount - 1) + 1);
+  
+  return optAuthorsCloudClassPrefix + classNumber;
 }
 
 function generateTags(){
@@ -202,21 +213,35 @@ function addClickListenersToTags(){
 addClickListenersToTags();
 
 function generateAuthors(){
+  let allAuthors = {};
   /* find all articles */
   const articles = document.querySelectorAll(optArticleSelector);
   /* START LOOP: for every article: */
   for(let article of articles){
-    /* find tags wrapper */
-    const authorWrapper = article.querySelector(optArticleAuthorSelector);
-    
     /* get author from data-author attribute */
     const articleAuthor = article.getAttribute('data-author');
     /* generate HTML of the link */
-    const linkHTML = '<a href="#author-' + articleAuthor + '">by <span>' + articleAuthor + '</span></a>';
-      console.log('linkHTML', linkHTML);
-    /* insert HTML of all the links into the tags wrapper */
-    authorWrapper.innerHTML = linkHTML;
+    const linkHTML = '<a class="author-size-X" href="#author-' + articleAuthor + '"><span>' + articleAuthor + '</span></a> ';   
+      if(!allAuthors.hasOwnProperty(linkHTML)){
+        /* [NEW] add generated code to allTags array */
+        allAuthors[linkHTML] = 1;
+      } else {        
+        allAuthors[linkHTML]++;
+      }
   }
+  console.log(allAuthors)
+   /* find tags wrapper */
+   const authorWrapper = document.querySelector(optAuthorsListSelector);
+  const authorsParams = calculateTagsParams(allAuthors);
+  console.log(authorsParams)
+  /*[new] add html variable for all links HTML code */
+  let allAuthorsHTML = ' '; 
+  for (let authorLinkHtml in allAuthors){
+    const authorClass = calculateTagClass(allAuthors[authorLinkHtml], authorsParams)
+    allAuthorsHTML += authorLinkHtml.replace('author-size-X', authorClass );
+  }
+    /* insert HTML of all the links into the tags wrapper */
+    authorWrapper.innerHTML = allAuthorsHTML;
 }
 
 generateAuthors();
@@ -281,17 +306,17 @@ function addClickListenersToTagsCloud(){
 
 addClickListenersToTagsCloud();
 
-// function addClickListenersToAuthorsCloud(){
-//   /* find all links to authors */
-//   const articleLinks = document.querySelectorAll('.post-author a');
+function addClickListenersToAuthorsCloud(){
+  /* find all links to authors */
+  const articleLinks = document.querySelectorAll('.list.authors a');
   
-//   /* START LOOP: for each link */
-//   for(let link of articleLinks){
-//     /* add tagClickHandler as event listener for that link */
-//     link.addEventListener('click', authorClickHandler);
-//   }
+  /* START LOOP: for each link */
+  for(let link of articleLinks){
+    /* add tagClickHandler as event listener for that link */
+    link.addEventListener('click', authorClickHandler);
+  }
 
-//   /* END LOOP: for each link */
-// }
+  /* END LOOP: for each link */
+}
 
-// addClickListenersToAuthorsCloud();
+addClickListenersToAuthorsCloud();
