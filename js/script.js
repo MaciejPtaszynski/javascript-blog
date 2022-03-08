@@ -147,9 +147,8 @@ function generateTags(){
   let allTagsHTML = ' ';
 
   for (let tagLinkHtml in allTags){
-    const kon = calculateTagClass(allTags[tagLinkHtml], tagsParams)
-    allTagsHTML += '<li>' + tagLinkHtml.replace('tag-size-X', kon ) + '(' + allTags[tagLinkHtml] + ')' + '</li>';
-    // allTagsHTML += tagLinkHTML;
+    const tagClass = calculateTagClass(allTags[tagLinkHtml], tagsParams)
+    allTagsHTML += tagLinkHtml.replace('tag-size-X', tagClass );
   }
   console.log(allTagsHTML)
   
