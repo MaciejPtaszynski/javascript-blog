@@ -1,4 +1,7 @@
 'use strict';
+const templates = {
+  articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML)
+}
 
 function titleClickHandler(event){
   event.preventDefault();
@@ -69,6 +72,8 @@ function generateTitleLinks(customSelector = ''){
       /* create HTML of the link */
       const linkHTML = '<li><a href="#' + articleId + '"><span>' + articleTitle + '</span></a></li>';
       console.log('linkHTML', linkHTML);
+      // const linkHTMLData = {id: articleId, title: articleTitle};
+      // const linkHTML = templates.articleLink(linkHTMLData);
       /* insert link into html variable */
       html = html + linkHTML;
     }
@@ -230,8 +235,8 @@ function generateAuthors(){
       }
   }
   console.log(allAuthors)
-   /* find tags wrapper */
-   const authorWrapper = document.querySelector(optAuthorsListSelector);
+   /* find author wrapper */
+  const authorWrapper = document.querySelector(optAuthorsListSelector);
   const authorsParams = calculateTagsParams(allAuthors);
   console.log(authorsParams)
   /*[new] add html variable for all links HTML code */
