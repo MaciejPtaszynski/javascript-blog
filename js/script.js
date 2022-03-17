@@ -157,6 +157,7 @@ function generateTags(){
   tagList.innerHTML = allTagsHTML;
   // tagList.innerHTML = templates.tagCloudLink(allTagsData); ****
   // console.log(allTagsData); ****
+  console.log(tagList);
 }
 
 generateTags();
