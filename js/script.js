@@ -152,11 +152,11 @@ function generateTags(){
     //   className: calculateTagClass(allTags[tag], tagsParams) ****
     // });
   }
-  console.log(allTagsHTML)
+
   
   tagList.innerHTML = allTagsHTML;
   // tagList.innerHTML = templates.tagCloudLink(allTagsData); ****
-  // console.log(allTagsData);
+  // console.log(allTagsData); ****
 }
 
 generateTags();
