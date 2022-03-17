@@ -1,8 +1,8 @@
 'use strict';
 const templates = {
   articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML),
-  // articleTagLink: Handlebars.compile(document.querySelector('#template-article-tag-link').innerHTML),
-  articleAuthorLink: Handlebars.compile(document.querySelector('#template-article-author-link').innerHTML),
+  articleTagLink: Handlebars.compile(document.querySelector('#template-article-tag-link').innerHTML),
+  // articleAuthorLink: Handlebars.compile(document.querySelector('#template-article-author-link').innerHTML),
   // tagCloudLink: Handlebars.compile(document.querySelector('#template-tag-cloud-link').innerHTML),
   // authorListLink: Handlebars.compile(document.querySelector('#template-author-list-link').innerHTML),
  };
@@ -121,10 +121,10 @@ function generateTags(){
     for( let tag of articleTagsArray){
       console.log(tag)
       /* generate HTML of the link */
-      const linkHTML = '<a class="tag-size-X" href="#tag-' + tag + '"><span>' + tag + '</span></a> ';
+      // const linkHTML = '<a class="tag-size-X" href="#tag-' + tag + '"><span>' + tag + '</span></a> ';
       // tworzy linki w artykule potrójnie ???
-      // const linkHTMLData = {id: a, title: tag};
-      // const linkHTML = templates.articleTagLink(linkHTMLData);
+      const linkHTMLData = {id: tag, title: tag};
+      const linkHTML = templates.articleTagLink(linkHTMLData);
       html = html + linkHTML;
       if(!allTags.hasOwnProperty(linkHTML)){
         allTags[linkHTML] = 1;
